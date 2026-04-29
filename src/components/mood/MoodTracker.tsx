@@ -59,9 +59,9 @@ export default function MoodTracker() {
       // Calling Gemini directly in frontend as per best practices
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: `Analyze the following text for emotional content and return a JSON object with "emotion" (choose the single best descriptive word, e.g.: happy, sad, angry, depression, anxiety, tiredness, hungry, stressed, neutral, curious, surprised, fearful, disgusted), "confidence" (0-1), and "explanation".
+        contents: [{ role: "user", parts: [{ text: `Analyze the following text for emotional content and return a JSON object with "emotion" (choose the single best descriptive word, e.g.: happy, sad, angry, depression, anxiety, tiredness, hungry, stressed, neutral, curious, surprised, fearful, disgusted), "confidence" (0-1), and "explanation".
         
-        Text: "${textInput}"`,
+        Text: "${textInput}"` }] }],
         config: {
           responseMimeType: "application/json",
           responseSchema: {
@@ -107,7 +107,7 @@ export default function MoodTracker() {
 
       const response = await ai.models.generateContent({
         model: "gemini-3-flash-preview",
-        contents: {
+        contents: [{
           parts: [
             {
               inlineData: {
@@ -122,7 +122,7 @@ export default function MoodTracker() {
               "confidence" (percentage 0-1), and an empathetic "explanation" based on facial micro-expressions.`
             }
           ]
-        },
+        }],
         config: {
           responseMimeType: "application/json",
           responseSchema: {
