@@ -1,0 +1,97 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "Stores user preferences and basic profile information.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "preferences": {
+          "type": "object",
+          "properties": {
+            "notifications": { "type": "boolean" },
+            "theme": { "type": "string", "enum": ["light", "dark", "system"] }
+          }
+        },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "ChatSession": {
+      "title": "Chat Session",
+      "description": "Represents a single conversation session with the AI chatbot.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "lastMessage": { "type": "string" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "createdAt"]
+    },
+    "Message": {
+      "title": "Message",
+      "description": "A single message within a chat session.",
+      "type": "object",
+      "properties": {
+        "sender": { "type": "string", "enum": ["user", "ai"] },
+        "text": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "sentiment": { "type": "string" }
+      },
+      "required": ["sender", "text", "timestamp"]
+    },
+    "MoodLog": {
+      "title": "Mood Log",
+      "description": "Recorded emotional states from text or facial analysis.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "emotion": { "type": "string" },
+        "confidence": { "type": "number" },
+        "source": { "type": "string", "enum": ["text", "face", "self"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "notes": { "type": "string" }
+      },
+      "required": ["userId", "emotion", "timestamp"]
+    },
+    "JournalEntry": {
+      "title": "Journal Entry",
+      "description": "Private thoughts and reflections recorded by the user.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "moodAtTime": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "content", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Individual user profiles."
+    },
+    "/chatSessions/{sessionId}": {
+      "schema": "ChatSession",
+      "description": "Conversations initiated by users."
+    },
+    "/chatSessions/{sessionId}/messages/{messageId}": {
+      "schema": "Message",
+      "description": "Messages within a session."
+    },
+    "/moodLogs/{logId}": {
+      "schema": "MoodLog",
+      "description": "Logs of detected emotions."
+    },
+    "/journalEntries/{entryId}": {
+      "schema": "JournalEntry",
+      "description": "User journal entries."
+    }
+  }
+}

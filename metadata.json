@@ -1,0 +1,12 @@
+{
+  "name": "Remix: Remix: MindEase AI",
+  "description": "An AI-powered mental health support system featuring emotion detection, empathetic chatbot, and personalized wellness resources.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "AI-powered sentiment analysis",
+    "Real-time emotion detection",
+    "Secure mood journaling"
+  ]
+}
